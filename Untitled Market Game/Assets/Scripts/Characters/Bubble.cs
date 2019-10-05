@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Bubble : MonoBehaviour
 {
@@ -8,33 +9,57 @@ public class Bubble : MonoBehaviour
     private string currentDialogue;
 
     public float delayBetweenLetters;
+    public float duration;
+
+    private float counterDuration;
 
     private float counter = 0f;
+    private TextMeshProUGUI TextPro;
+    private int i = 0;
+
+    private void Start()
+    {
+        TextPro = GetComponentInChildren<TextMeshProUGUI>();
+    }
 
     public void GiveDialogue(List<string> dialogues)
     {
-        nextDialogues = dialogues;
+        nextDialogues = new List<string>();
+        for (int j = 0; j < dialogues.Count; ++j)
+        {
+            nextDialogues.Add(string.Copy(dialogues[j]));
+        }
         currentDialogue = nextDialogues[0];
-        
+        nextDialogues.Remove(currentDialogue);
+        i = 0;
     }
 
     private void Update()
     {
         counter += Time.deltaTime;
-        if (counter > delayBetweenLetters)
+        if (counter > delayBetweenLetters/60)
         {
             counter = 0f;
-            if(Equals(currentDialogue,""))
+            if (i <= currentDialogue.Length) {
+                TextPro.text = currentDialogue.Substring(0,i);
+                ++i;
+                counterDuration = 0f;
+            } else
             {
-                if (nextDialogues.Count > 0)
+                ++counterDuration;
+                if(counterDuration > duration)
                 {
-                    currentDialogue = nextDialogues[0];
-                    nextDialogues.Remove(currentDialogue);
+                    if (nextDialogues.Count > 0)
+                    {
+                        currentDialogue = nextDialogues[0];
+                        nextDialogues.Remove(currentDialogue);
+                        i = 0;
+                    }
+                    else
+                    {
+                        Destroy(gameObject);
+                    }
                 }
-            }
-            else
-            {
-                currentDialogue.Substring(1);
             }
         }
     }
