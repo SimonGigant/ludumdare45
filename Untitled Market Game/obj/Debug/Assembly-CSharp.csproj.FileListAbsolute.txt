@@ -1,0 +1,2 @@
+C:\Users\Simon\Documents\Gamedev\ludum dare\ludumdare45\Untitled Market Game\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\Simon\Documents\Gamedev\ludum dare\ludumdare45\Untitled Market Game\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
