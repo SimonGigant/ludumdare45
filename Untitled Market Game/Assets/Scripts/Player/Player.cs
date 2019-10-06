@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public Camera cam;
     public Material shaderSelection;
     public ObjectType inventory = ObjectType.None;
+    public GameObject balle;
+
     private Transform _selection;
     private Material defaultMaterial;
 
@@ -20,20 +22,31 @@ public class Player : MonoBehaviour
 
     void AddToInventory(ObjectType obj)
     {
-        inventory = obj;
+        if (inventory == ObjectType.None || inventory == ObjectType.Balle)
+        {
+            inventory = obj;
+        }
     }
 
     void Update()
     {
         Vector3 move = (Input.GetAxis("Horizontal") * new Vector3(cam.transform.right.x, 0, cam.transform.right.z) + Input.GetAxis("Vertical") * new Vector3(cam.transform.forward.x, 0, cam.transform.forward.z)).normalized;
         _controller.Move(move * Time.deltaTime * speed);
-        
 
-        if(_selection != null && _selection.CompareTag("Pickable"))
+
+        if (_selection != null && (_selection.CompareTag("Pickable") || _selection.CompareTag("Activable")))
         {
             Renderer selectionRenderer = _selection.parent.GetComponentInChildren<Renderer>();
             selectionRenderer.material = defaultMaterial;
             _selection = null;
+        }
+        if (inventory == ObjectType.Balle && Input.GetButtonDown("Fire1"))
+        {
+            inventory = ObjectType.None;
+            GameObject thrown = GameObject.Instantiate(balle, transform.position + cam.transform.forward * 1.5f + Vector3.up * 1.5f, transform.rotation);
+            Rigidbody rigidbody = thrown.GetComponentInChildren<Rigidbody>();
+            rigidbody.AddForce(cam.transform.forward * 2000);
+            return;
         }
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width/2,Screen.height/2));
@@ -44,7 +57,7 @@ public class Player : MonoBehaviour
             {
                 GameObject g = _selection.transform.parent.gameObject;
                 Character thisChar = g.GetComponent<Character>();
-                if (Input.GetButton("Fire1") && thisChar != null)
+                if (Input.GetButtonDown("Fire1") && thisChar != null)
                 {
                     thisChar.MeetCharacter();
                 }
@@ -56,9 +69,23 @@ public class Player : MonoBehaviour
                     Renderer selectionRenderer = _selection.parent.GetComponentInChildren<Renderer>();
                     defaultMaterial = selectionRenderer.material;
                     selectionRenderer.material = shaderSelection;
-                    if (Input.GetButton("Fire1")) {
+                    if (Input.GetButtonDown("Fire1")) {
                         AddToInventory(thisObject.type);
                         Destroy(g);
+                    }
+                }
+            }else if (_selection.CompareTag("Activable"))
+            {
+                GameObject g = _selection.transform.parent.gameObject;
+                Renderer selectionRenderer = _selection.parent.GetComponentInChildren<Renderer>();
+                defaultMaterial = selectionRenderer.material;
+                selectionRenderer.material = shaderSelection;
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    Activable act = _selection.parent.GetComponentInChildren<Activable>();
+                    if (act.Activate(inventory))
+                    {
+                        inventory = ObjectType.None;
                     }
                 }
             }

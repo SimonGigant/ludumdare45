@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Selectable
   - Pickable
+  - Activable
   layers:
   - Default
   - TransparentFX

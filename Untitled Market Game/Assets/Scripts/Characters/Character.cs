@@ -67,8 +67,7 @@ public class Character : MonoBehaviour
         {
             Quaternion quat = transform.rotation;
             quat.y += -90;
-            activeBubble = GameObject.Instantiate(bubble,transform.position + new Vector3(0, heightBubble, 0), quat);
-            activeBubble.transform.parent = gameObject.transform;
+            activeBubble = GameObject.Instantiate(bubble,transform.position + new Vector3(0, heightBubble, 0), quat, gameObject.transform);
             Bubble b = activeBubble.GetComponent<Bubble>();
             b.GiveDialogue(text);
         }
