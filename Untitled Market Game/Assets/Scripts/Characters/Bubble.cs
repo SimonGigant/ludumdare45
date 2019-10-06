@@ -5,6 +5,7 @@ using TMPro;
 
 public class Bubble : MonoBehaviour
 {
+    static public Bubble instance = null;
     private List<string> nextDialogues;
     private string currentDialogue;
 
@@ -20,10 +21,13 @@ public class Bubble : MonoBehaviour
     private void Start()
     {
         TextPro = GetComponentInChildren<TextMeshProUGUI>();
+        instance = this;
     }
 
     public void GiveDialogue(List<string> dialogues)
     {
+        Canvas canv = gameObject.GetComponent<Canvas>();
+        canv.enabled = true;
         nextDialogues = new List<string>();
         for (int j = 0; j < dialogues.Count; ++j)
         {
@@ -34,8 +38,14 @@ public class Bubble : MonoBehaviour
         i = 0;
     }
 
+    public void PassDialogue()
+    {
+
+    }
+
     private void Update()
     {
+        if (currentDialogue == null) return;
         counter += Time.deltaTime;
         if (counter > delayBetweenLetters/60)
         {
@@ -57,7 +67,8 @@ public class Bubble : MonoBehaviour
                     }
                     else
                     {
-                        Destroy(gameObject);
+                        Canvas canv = gameObject.GetComponent<Canvas>();
+                        canv.enabled = false;
                     }
                 }
             }
