@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Player : MonoBehaviour
 {
     public float speed;
     public Camera cam;
     public Material shaderSelection;
+    public ObjectType inventory = ObjectType.None;
 
     private CharacterController _controller;
     void Start()

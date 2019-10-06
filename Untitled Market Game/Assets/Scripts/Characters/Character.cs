@@ -30,6 +30,7 @@ public class Character : MonoBehaviour
     private bool met;
 
     public GameObject bubble;
+    public Player player;
 
     public float heightBubble;
     
@@ -45,7 +46,13 @@ public class Character : MonoBehaviour
     {
         if (met)
         {
-            Talk(dialogue[1]);
+            if (dialogue.Count > (int)player.inventory) {
+                Talk(dialogue[(int)player.inventory]);
+            }
+            else
+            {
+                Talk(dialogue[1]);
+            }
         }
         else
         {

@@ -1191,8 +1191,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogInInspector:
-    list: []
+    list:
+    - list:
+      - Hey Salut
+    - list:
+      - Hey connard
   bubble: {fileID: 8724797897450713225, guid: c944fa76d535e5649be7be4da6b297fe, type: 3}
+  player: {fileID: 1104916215}
   heightBubble: 9
 --- !u!1 &1104916210
 GameObject:
@@ -1304,6 +1309,7 @@ MonoBehaviour:
   speed: 5
   cam: {fileID: 963194227}
   shaderSelection: {fileID: 2100000, guid: 1c29458a433bcc444a6e0ffb28cf3b73, type: 2}
+  inventory: 1
 --- !u!143 &1104916216
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2153,6 +2159,10 @@ PrefabInstance:
       propertyPath: dialogInInspector.list.Array.data[1].list.Array.data[1]
       value: t'es aussi nul que Billy
       objectReference: {fileID: 0}
+    - target: {fileID: 1725397259, guid: 14960e7357fede74b85210f33f971e55, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1104916215}
     - target: {fileID: 2047880717, guid: 14960e7357fede74b85210f33f971e55, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
