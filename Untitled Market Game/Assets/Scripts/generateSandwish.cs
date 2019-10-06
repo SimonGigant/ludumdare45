@@ -30,13 +30,13 @@ public class generateSandwish : MonoBehaviour
                     item.GetComponent<RectTransform>().localPosition = new Vector3(item.GetComponent<RectTransform>().localPosition.x, item.GetComponent<RectTransform>().localPosition.y, 0);
 
                     item.GetComponentInChildren<TextMeshProUGUI>().SetText(article[k + j * 6 + i * 36]);
-                    GameObject m_Object = item.transform.FindChild("Price").gameObject;
+                    GameObject m_Object = item.transform.Find("Price").gameObject;
                     m_Object.GetComponent<TextMeshProUGUI>().SetText(Random.Range(100, 15000)+ "€");
 
                     if (i==5 && j == 5 && k == 5)
                     {
                         item.GetComponentInChildren<TextMeshProUGUI>().SetText("Touillette");
-                        m_Object = item.transform.FindChild("Price").gameObject;
+                        m_Object = item.transform.Find("Price").gameObject;
                         m_Object.GetComponent<TextMeshProUGUI>().SetText("Gratuit €");
                     }
                 }

@@ -40,6 +40,7 @@ public class Character : MonoBehaviour
     {
         met = false;
         dialogue = dialogInInspector.Lists();
+        bubble = Resources.Load("Prefabs/Bubble") as GameObject;
     }
 
     public void MeetCharacter()

@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
     private Transform _selection;
     private Material defaultMaterial;
+    private float yvalue = 0f;
 
     private CharacterController _controller;
     void Start()
@@ -30,7 +31,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Vector3 move = (Input.GetAxis("Horizontal") * new Vector3(cam.transform.right.x, 0, cam.transform.right.z) + Input.GetAxis("Vertical") * new Vector3(cam.transform.forward.x, 0, cam.transform.forward.z)).normalized;
+        yvalue += Physics.gravity.y * Time.deltaTime * 5f;
+        Vector3 move = Vector3.up * yvalue + (Input.GetAxis("Horizontal") * new Vector3(cam.transform.right.x, 0, cam.transform.right.z) + Input.GetAxis("Vertical") * new Vector3(cam.transform.forward.x, 0, cam.transform.forward.z)).normalized;
         _controller.Move(move * Time.deltaTime * speed);
 
 
