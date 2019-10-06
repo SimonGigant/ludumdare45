@@ -34,14 +34,12 @@ public class Character : MonoBehaviour
 
     public float heightBubble;
     public float rotatBubble;
-
     private GameObject activeBubble = null;
 
     private void Start()
     {
         met = false;
         dialogue = dialogInInspector.Lists();
-       // bubble = Resources.Load("Assets/Prefabs/Bubble.prefab") as GameObject;
     }
 
     public void MeetCharacter()
@@ -65,23 +63,27 @@ public class Character : MonoBehaviour
 
     private void Talk(List<string> text)
     {
-        if(activeBubble == null)
-        {
             Bubble.instance.GiveDialogue(text);
-            if (gameObject.name == "Lysandre" && player.GetComponent<Player>().inventory == ObjectType.Touillette)
+            if (gameObject.name.CompareTo("Lysandre") == 0 && player.GetComponent<Player>().inventory == ObjectType.Touillette)
             {
                 player.GetComponent<Player>().inventory = ObjectType.Cle;
             }
-            /*GameObject capsule = gameObject.GetComponentInChildren<CapsuleCollider>().gameObject;
-            Quaternion quat = Quaternion.identity;
-            activeBubble = GameObject.Instantiate(bubble,new Vector3(0,0,0), Quaternion.identity, capsule.transform);
-            Bubble b = activeBubble.GetComponent<Bubble>();
-            b.GiveDialogue(text);
-            capsule.transform.rotation.Set(0, rotatBubble, 0, 0);
-            */
-
-            
-        }
+            else if (gameObject.name.CompareTo("M_Sport") == 0 && player.GetComponent<Player>().inventory == ObjectType.Revue)
+            {
+                player.GetComponent<Player>().inventory = ObjectType.Scie;
+            }
+            else if (gameObject.name.CompareTo("FX_deBidoche") == 0 && player.GetComponent<Player>().inventory == ObjectType.Scie)
+            {
+                player.GetComponent<Player>().inventory = ObjectType.Rein;
+            }
+            else if (gameObject.name.CompareTo("Beatrice") == 0 && player.GetComponent<Player>().inventory == ObjectType.Rein)
+            {
+                player.GetComponent<Player>().inventory = ObjectType.Thune;
+            }
+            else if (gameObject.name.CompareTo("Sophie") == 0 && player.GetComponent<Player>().inventory == ObjectType.Thune)
+            {
+                player.GetComponent<Player>().inventory = ObjectType.Ticket;
+            }
     }
     
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ActivableType{BoiteABalle};
+public enum ActivableType{BoiteABalle, GrandeRoue};
 public class Activable : MonoBehaviour
 {
     public ActivableType type;
@@ -20,6 +20,14 @@ public class Activable : MonoBehaviour
                         activated = true;
                         GameObject thrown = GameObject.Instantiate(balle, transform.position + Vector3.up * 1.5f, transform.rotation);
                         return true;
+                    }
+                    break;
+                }
+            case ActivableType.GrandeRoue:
+                {
+                    if (inventory == ObjectType.Ticket)
+                    {
+                        transform.parent.GetComponent<Animator>().SetBool("wheelActivate", true);
                     }
                     break;
                 }
