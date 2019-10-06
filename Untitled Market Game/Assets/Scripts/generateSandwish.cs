@@ -12,11 +12,14 @@ public class generateSandwish : MonoBehaviour
     public string[] article = new string[216];
 
     public GameObject prefab;
+    public GameObject touillette;
     public GameObject shop;
 
 
     void Start()
     {
+        touillette = shop.transform.Find("Touillette").gameObject;
+
         for(int i = 0; i < 6; i++)
         {
             for (int j = 0; j < 6; j++)
@@ -35,9 +38,9 @@ public class generateSandwish : MonoBehaviour
 
                     if (i==5 && j == 5 && k == 5)
                     {
-                        item.GetComponentInChildren<TextMeshProUGUI>().SetText("Touillette");
-                        m_Object = item.transform.Find("Price").gameObject;
-                        m_Object.GetComponent<TextMeshProUGUI>().SetText("Gratuit €");
+
+                        touillette.transform.SetSiblingIndex(216);
+
                     }
                 }
             }

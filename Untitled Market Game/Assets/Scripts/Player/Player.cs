@@ -20,8 +20,12 @@ public class Player : MonoBehaviour
     {
         _controller = GetComponent<CharacterController>();
     }
+    public void AddTouillette()
+    {
+        AddToInventory(ObjectType.Touillette);
+    }
 
-    void AddToInventory(ObjectType obj)
+    public void AddToInventory(ObjectType obj)
     {
         if (inventory == ObjectType.None || inventory == ObjectType.Balle)
         {
