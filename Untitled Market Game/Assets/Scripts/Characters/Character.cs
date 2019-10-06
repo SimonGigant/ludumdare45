@@ -68,6 +68,10 @@ public class Character : MonoBehaviour
         if(activeBubble == null)
         {
             Bubble.instance.GiveDialogue(text);
+            if (gameObject.name == "Lysandre" && player.GetComponent<Player>().inventory == ObjectType.Touillette)
+            {
+                player.GetComponent<Player>().inventory = ObjectType.Cle;
+            }
             /*GameObject capsule = gameObject.GetComponentInChildren<CapsuleCollider>().gameObject;
             Quaternion quat = Quaternion.identity;
             activeBubble = GameObject.Instantiate(bubble,new Vector3(0,0,0), Quaternion.identity, capsule.transform);
