@@ -126,6 +126,18 @@ public class SmoothMouseLook : MonoBehaviour
         if (rb)
             rb.freezeRotation = true;
         originalRotation = transform.localRotation;
+
+        //mouseLock
+
+        // This unlocks the cursor
+        //Cursor.lockState = CursorLockMode.None;
+
+        // This locks the cursor
+        Cursor.lockState = CursorLockMode.Confined;
+
+
+        // If you unlock the cursor, but its still invisible, try this:
+        //Screen.showCursor = true;
     }
 
     public static float ClampAngle(float angle, float min, float max)

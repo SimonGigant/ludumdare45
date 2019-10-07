@@ -10,15 +10,19 @@ public class Player : MonoBehaviour
     public Material shaderSelection;
     public ObjectType inventory = ObjectType.None;
     public GameObject balle;
+    public List<GameObject> ListModel;
 
     private Transform _selection;
     private Material defaultMaterial;
     private float yvalue = 0f;
+    public Texture2D texture;
 
     private CharacterController _controller;
+
     void Start()
     {
         _controller = GetComponent<CharacterController>();
+        Cursor.SetCursor(texture,Vector2.zero,CursorMode.Auto);
     }
     public void AddTouillette()
     {
@@ -27,7 +31,7 @@ public class Player : MonoBehaviour
 
     public void AddToInventory(ObjectType obj)
     {
-        if (inventory == ObjectType.None || inventory == ObjectType.Balle)
+        if (inventory == ObjectType.None || obj != ObjectType.Balle)
         {
             inventory = obj;
         }
@@ -35,10 +39,15 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        for(int i = 1; i < 10; ++i)
+        {
+            ListModel[i].SetActive( i == (int)inventory);
+        }
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = true;
         yvalue += Physics.gravity.y * Time.deltaTime * 5f;
         Vector3 move = Vector3.up * yvalue + (Input.GetAxis("Horizontal") * new Vector3(cam.transform.right.x, 0, cam.transform.right.z) + Input.GetAxis("Vertical") * new Vector3(cam.transform.forward.x, 0, cam.transform.forward.z)).normalized;
         _controller.Move(move * Time.deltaTime * speed);
-
 
         if (_selection != null && (_selection.CompareTag("Pickable") || _selection.CompareTag("Activable")))
         {
@@ -55,8 +64,8 @@ public class Player : MonoBehaviour
             return;
         }
         RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width/2,Screen.height/2));
-        if (Physics.Raycast(ray, out hit))
+        Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width/2, Screen.height/2));
+        if (Physics.Raycast(ray, out hit, 15f))
         {
             _selection = hit.transform;
             if (_selection.CompareTag("Selectable"))
@@ -89,11 +98,14 @@ public class Player : MonoBehaviour
                 if (Input.GetButtonDown("Fire1"))
                 {
                     Activable act = _selection.parent.GetComponentInChildren<Activable>();
-                    if (act.Activate(inventory))
+                    if (act.Activate(inventory) && (inventory == ObjectType.None||inventory==ObjectType.Cle))
                     {
                         inventory = ObjectType.None;
                     }
                 }
+            }else if(_selection.CompareTag("Boutique"))
+            {
+                Cursor.lockState = CursorLockMode.None;
             }
         }
     }
